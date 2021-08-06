@@ -1,16 +1,17 @@
 const express = require("express");
-const routes = require("./controllers/api");
+const routes = require("./controllers");
 const sequelize = require("./config/connection");
 const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 const exphbs = require("express-handlebars");
-const hbs = exphbs.create({});
+//const hbs = exphbs.create({});
 
 const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 require("dotenv").config();
+
 const sess = {
   secret: process.env.SECRET,
   cookie: {},
@@ -22,7 +23,7 @@ const sess = {
 };
 
 app.use(session(sess));
-app.engine("handlebars", hbs.engine);
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 app.use(express.static(path.join(__dirname, "public")));
