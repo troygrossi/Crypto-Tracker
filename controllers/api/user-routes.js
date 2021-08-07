@@ -4,7 +4,7 @@ const { User } = require("../../models");
 //get all users
 router.get("/", (req, res) => {
   User.findAll({
-    attributes: ["username", "password"],
+    attributes: ["id", "username"],
   })
     .then((dbUserData) => res.json(dbUserData))
     .catch((err) => {
@@ -14,6 +14,25 @@ router.get("/", (req, res) => {
 });
 
 //get one user
+router.get("/:id", (req, res) => {
+  User.findOne({
+    attributes: ["id", "username"],
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((dbUserData) => {
+      if (!dbUserData) {
+        res.status(404).json({ message: "No user found with this id" });
+      } else {
+        res.json(dbUserData);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
 //create a user
 router.post("/", (req, res) => {
@@ -31,7 +50,43 @@ router.post("/", (req, res) => {
 });
 
 //update a user
+router.put("/:id", (req, res) => {
+  User.update(req.body, {
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((dbUserData) => {
+      if (!dbUserData) {
+        res.status(404).json({ message: "No user found with this id" });
+      } else {
+        res.json(dbUserData);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
 //delete a user
+router.delete("/:id", (req, res) => {
+  User.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((dbUserData) => {
+      if (!dbUserData) {
+        res.status(404).json({ message: "No user found with this id" });
+        return;
+      }
+      res.json(dbUserData);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
 module.exports = router;
