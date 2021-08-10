@@ -19,10 +19,11 @@ router.get("/", (req, res) => {
     });
 });
 
+//Get all cryptos by user
 router.get("/:id", (req, res) => {
-  Crypto.findOne({
+  Crypto.findAll({
     where: {
-      id: req.params.id,
+      user_id: req.params.id,
     },
     attributes: ["id", "crypto_name"],
     include: [
