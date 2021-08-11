@@ -52,7 +52,7 @@ const mapObject = function (data) {
   return cryptoData;
 };
 
-// Generate containers that contain the list or single crypto
+// Generate containers that contain the list of crypto
 // Idea is: have a container that already exists with no data called .crypto-container, this will hold all the cryptos
 // Then, this function creates a new container for every crytpo pulled from the API
 // Then, they are assigned the class .cryptos
