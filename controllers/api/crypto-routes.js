@@ -4,7 +4,7 @@ const { User, Crypto } = require("../../models");
 
 router.get("/", (req, res) => {
   Crypto.findAll({
-    attributes: ["id", "crypto_name"],
+    attributes: ["id", "crypto_name", "ticker"],
     include: [
       {
         model: User,
@@ -25,7 +25,7 @@ router.get("/:id", (req, res) => {
     where: {
       user_id: req.params.id,
     },
-    attributes: ["id", "crypto_name"],
+    attributes: ["id", "crypto_name", "ticker"],
     include: [
       {
         model: User,
@@ -49,6 +49,7 @@ router.post("/", (req, res) => {
   Crypto.create({
     crypto_name: req.body.crypto_name,
     user_id: req.body.user_id, //this will be changed to req.session.user_id when session is set up
+    ticker: req.body.ticker,
   })
     .then((dbCryptoData) => res.json(dbCryptoData))
     .catch((err) => {
