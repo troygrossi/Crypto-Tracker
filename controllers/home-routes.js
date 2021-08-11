@@ -1,9 +1,9 @@
 const router = require("express").Router();
-// const { cryptoData } = require("../public/javascript/crypto.js");
-// console.log(cryptoData);
-
+// const data = require("../public/javascript/crypto.js");
+// console.log(data);
+const test = { test: "test" };
 router.get("/", (req, res) => {
-  res.render("home");
+  res.render("home", { test });
 });
 
 module.exports = router;
