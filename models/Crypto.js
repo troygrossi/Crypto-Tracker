@@ -15,6 +15,10 @@ Crypto.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    ticker: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     user_id: {
       type: DataTypes.INTEGER,
       references: {
