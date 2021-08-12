@@ -1,9 +1,8 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
 
 .crypto-image {
   width: 50%;
@@ -11,44 +10,35 @@
 }
 
 body {
- 
   background-image: url("../css/background.jpg");
 
   margin-top: 20px;
   margin-left: 30px;
 }
 
-
 .header {
   justify-content: sticky;
 }
 
 .box1 div {
-
   flex-wrap: wrap;
   align-items: bottom;
   margin-top: 20%;
-
- 
 }
 
 .crypto-container-all {
-   justify-content: row;
+  justify-content: row;
 
-   margin-left: 10%;
-   color: red;
-   
-  
-   
-   font-size: small;
+  margin-left: 10%;
+  color: red;
+
+  font-size: small;
 }
-
 
 .jumbotron {
   justify-content: top;
-  
 }
 
 .grid {
-  color: red
+  color: red;
 }
