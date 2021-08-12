@@ -5,13 +5,9 @@
 }
 
 
-
-.grid {
-
-justify-content: end;
-text-align: row;
-flex: row;
-
+.crypto-image {
+  width: 50%;
+  /* max-height: auto; */
 }
 
 body {
@@ -41,7 +37,7 @@ body {
 
    margin-left: 10%;
    color: red;
-   font-size: large;
+   
   
    
    font-size: small;
