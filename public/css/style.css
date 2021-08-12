@@ -34,6 +34,7 @@ body {
 
 .crypto-container-all {
    justify-content: row;
+   margin-left: 30%;
 
    margin-left: 10%;
    color: red;
