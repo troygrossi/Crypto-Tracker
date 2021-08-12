@@ -1,3 +1,11 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+
 body {
  
   background-image: url("../css/background.jpg");
@@ -6,6 +14,10 @@ body {
   margin-left: 30px;
 }
 
+
+.header {
+  justify-content: sticky;
+}
 
 .box1 div {
 
@@ -18,16 +30,16 @@ body {
 
 .crypto-container-all {
    justify-content: center;
-   margin-left: 30%;
+   margin-left: 10%;
+   color: red;
+   font-size: large;
    
-   font-size: x-small;
+   font-size: small;
 }
 
 
 .jumbotron {
-  justify-content: top
-;
-  background-color: purple;
-  color: aquamarine;
+  justify-content: top;
+  
 }
 
