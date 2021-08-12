@@ -56,6 +56,16 @@ const generateRows = function (cryptoData, index) {
   containerSingleEl.setAttribute("class", "row crypto-container");
   containerSingleEl.setAttribute("data-index", index);
 
+  const imageContainerEl = document.createElement("div");
+  imageContainerEl.setAttribute("class", "col crypto-image-container");
+  const imageEl = document.createElement("img");
+  imageEl.setAttribute("class", "crypto-image");
+  imageEl.setAttribute(
+    "src",
+    "https://www.cryptocompare.com" + cryptoData.image
+  );
+  imageContainerEl.append(imageEl);
+  containerSingleEl.append(imageContainerEl);
   const fullNameEl = document.createElement("div");
   fullNameEl.setAttribute("class", "col crypto-fullName");
   fullNameEl.textContent = cryptoData.fullName;
@@ -84,16 +94,6 @@ const generateRows = function (cryptoData, index) {
   mktCapEl.setAttribute("class", "col crypto-mktCap");
   mktCapEl.textContent = cryptoData.mktCap;
   containerSingleEl.append(mktCapEl);
-  const imageContainerEl = document.createElement("div");
-  imageContainerEl.setAttribute("class", "col crypto-image-container");
-  const imageEl = document.createElement("img");
-  imageEl.setAttribute("class", "crypto-image");
-  imageEl.setAttribute(
-    "src",
-    "https://www.cryptocompare.com" + cryptoData.image
-  );
-  imageContainerEl.append(imageEl);
-  containerSingleEl.append(imageContainerEl);
 
   containerAllEl.append(containerSingleEl);
 };
