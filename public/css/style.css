@@ -3,42 +3,44 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 .crypto-image {
   width: 50%;
   /* max-height: auto; */
 }
-
 body {
   background-image: url("../css/background.jpg");
-
   margin-top: 20px;
   margin-left: 30px;
 }
-
 .header {
   justify-content: sticky;
 }
-
 .box1 div {
   flex-wrap: wrap;
   align-items: bottom;
   margin-top: 20%;
 }
-
 .crypto-container-all {
   justify-content: row;
-
   margin-left: 10%;
   color: red;
-
   font-size: small;
 }
-
+.crypto-container {
+  background-color: rgba(175, 171, 171, 0.363);
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.crypto-fullName {
+  margin: 0 auto 0 auto;
+  border-style: solid;
+  border-color: white;
+}
 .jumbotron {
   justify-content: top;
 }
-
 .grid {
   color: red;
 }
