@@ -28,11 +28,22 @@ body {
 
 .crypto-container-all {
   justify-content: row;
-
   margin-left: 10%;
   color: red;
 
   font-size: small;
+}
+
+.crypto-container {
+  background-color: rgba(175, 171, 171, 0.363);
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.crypto-fullName {
+  border-style: solid;
+  border-color: white;
 }
 
 .jumbotron {
