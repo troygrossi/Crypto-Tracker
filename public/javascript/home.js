@@ -1,4 +1,4 @@
-const { contains } = ("sequelize/types/lib/operators");
+const { contains } = "sequelize/types/lib/operators";
 
 // const { profile } = require("console");
 
@@ -21,7 +21,7 @@ const mapObject = function (data) {
     let ticker = "No Info";
     let fullName = "No Info";
     let image = "No Info";
-    let mktCap = "No Info"; 
+    let mktCap = "No Info";
     let price = "No Info";
     let low = "No Info";
     let high = "No Info";
@@ -68,7 +68,7 @@ const generateRows = function (cryptoData) {
   cryptoData.forEach((cryptoData, index) => {
     const containerSingleEl = document.createElement("div");
 
-    containerSingleEl.setAttribute("class","row crypto-container");
+    containerSingleEl.setAttribute("class", "row crypto-container");
     containerSingleEl.setAttribute("data-index", index);
 
     const imageContainerEl = document.createElement("div");
@@ -121,10 +121,13 @@ fetchCrypto(cryptoURL);
 
 const containerEl = document.querySelector(".crypto-container-all");
 containerEl.addEventListener("click", function (event) {
-  console.log(event.target.parentElement);
-  const clikitem = event.target.parentElement;
+  const clickedItem = event.target.parentElement;
 
-//   if(clickitem.className==="row/comtainer")
-// then = <a href="https://www.cryptocompare.com"><profile.js/a>
+  if (clickedItem.className === "row crypto-container") {
+    const cryptoName = clickedItem.children[1].textContent;
+    const cryptoTicker = clickedItem.children[2].textContent;
 
+    console.log("cryptoName: " + cryptoName);
+    console.log("cryptoTicker: " + cryptoTicker);
+  }
 });
