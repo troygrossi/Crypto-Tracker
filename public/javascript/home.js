@@ -83,31 +83,31 @@ const generateRows = function (cryptoData) {
     containerSingleEl.append(imageContainerEl);
     const fullNameEl = document.createElement("div");
     fullNameEl.setAttribute("class", "col crypto-fullName");
-    fullNameEl.textContent = cryptoData.fullName;
+    fullNameEl.textContent = `Name: ${cryptoData.fullName}`;
     containerSingleEl.append(fullNameEl);
     const tickerEl = document.createElement("div");
     tickerEl.setAttribute("class", "col rypto-ticker");
-    tickerEl.textContent = cryptoData.ticker;
+    tickerEl.textContent = `Ticker: ${cryptoData.ticker}`;
     containerSingleEl.append(tickerEl);
     const priceEl = document.createElement("div");
     priceEl.setAttribute("class", "col crypto-price");
-    priceEl.textContent = cryptoData.price;
+    priceEl.textContent = `Price: ${cryptoData.price}`;
     containerSingleEl.append(priceEl);
     const lowEl = document.createElement("div");
     lowEl.setAttribute("class", "col crypto-low");
-    lowEl.textContent = cryptoData.low;
+    lowEl.textContent = `Low: ${cryptoData.low}`;
     containerSingleEl.append(lowEl);
     const highEl = document.createElement("div");
     highEl.setAttribute("class", "col crypto-high");
-    highEl.textContent = cryptoData.high;
+    highEl.textContent = `High: ${cryptoData.high}`;
     containerSingleEl.append(highEl);
     const changeEl = document.createElement("div");
     changeEl.setAttribute("class", "col crypto-change");
-    changeEl.textContent = cryptoData.change;
+    changeEl.textContent = `Change: ${cryptoData.change}`;
     containerSingleEl.append(changeEl);
     const mktCapEl = document.createElement("div");
     mktCapEl.setAttribute("class", "col crypto-mktCap");
-    mktCapEl.textContent = cryptoData.mktCap;
+    mktCapEl.textContent = `Market Cap: ${cryptoData.mktCap}`;
     containerSingleEl.append(mktCapEl);
 
     //create button element and append to div
@@ -127,6 +127,7 @@ containerEl.addEventListener("click", function (event) {
     const cryptoName = clickedItem.children[1].textContent;
     const cryptoTicker = clickedItem.children[2].textContent;
 
+    console.log(clickedItem);
     console.log("cryptoName: " + cryptoName);
     console.log("cryptoTicker: " + cryptoTicker);
   }
