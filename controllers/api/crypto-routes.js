@@ -48,7 +48,7 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
   Crypto.create({
     crypto_name: req.body.crypto_name,
-    user_id: req.body.user_id, //this will be changed to req.session.user_id when session is set up
+    user_id: req.session.user_id,
     ticker: req.body.ticker,
   })
     .then((dbCryptoData) => res.json(dbCryptoData))
