@@ -127,23 +127,8 @@ containerEl.addEventListener("click", function (event) {
     const cryptoName = clickedItem.children[1].textContent;
     const cryptoTicker = clickedItem.children[2].textContent;
 
-    addCrypto(cryptoName, cryptoTicker);
+    console.log(clickedItem);
+    console.log("cryptoName: " + cryptoName);
+    console.log("cryptoTicker: " + cryptoTicker);
   }
 });
-
-async function addCrypto(crypto_name, ticker) {
-  const response = await fetch("/api/cryptos", {
-    method: "post",
-    body: JSON.stringify({
-      crypto_name,
-      ticker,
-    }),
-    headers: { "Content-Type": "application/json" },
-  });
-
-  if (response.ok) {
-    console.log("You're good");
-  } else {
-    alert(response.statusText);
-  }
-}
