@@ -4,9 +4,12 @@
   box-sizing: border-box;
 }
 .crypto-image {
+  
   width: 50%;
-  /* max-height: auto; */
+  
 }
+
+
 body {
   background-image: url("../css/background.jpg");
   margin-top: 20px;
@@ -14,33 +17,42 @@ body {
 }
 .header {
   justify-content: sticky;
+  flex: auto;
+  color: black;
 }
 .box1 div {
   flex-wrap: wrap;
   align-items: bottom;
   margin-top: 20%;
+  color: black;
 }
 .crypto-container-all {
   justify-content: row;
-  margin-left: 10%;
-  color: red;
-  font-size: small;
+  margin-left: 20%;
+  font-display: red;
+  font-size: large;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: 400;
+  text-shadow: 2px 2px rgb(219, 21, 21) ;
+  border-top-left-radius: 50%;
+  
 }
 .crypto-container {
   background-color: rgba(175, 171, 171, 0.363);
   margin-bottom: 10px;
-  margin-top: 10px;
-  margin-left: 10%;
-  margin-right: 10%;
+  margin-top: 20px;
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-bottom: 20;
+  /* text-align: center; */
+  text-align: row;
 }
 .crypto-fullName {
   margin: 0 auto 0 auto;
   border-style: solid;
-  border-color: white;
+  
 }
-.jumbotron {
+.jumbotron{
   justify-content: top;
-}
-.grid {
-  color: red;
+  background-color: black;
 }
