@@ -130,5 +130,6 @@ containerEl.addEventListener("click", function (event) {
     console.log(clickedItem);
     console.log("cryptoName: " + cryptoName);
     console.log("cryptoTicker: " + cryptoTicker);
+    
   }
 });
