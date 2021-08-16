@@ -2,11 +2,7 @@ const router = require("express").Router();
 router.get("/", (req, res) => {
   const loggedIn = req.session.loggedIn;
   console.log(loggedIn);
-<<<<<<< HEAD
-  res.render("/", { loggedIn });
-=======
   res.render("home", { loggedIn });
->>>>>>> 36b3854742c1b2957ec3f0c2b9561d9cf1fa181a
 });
 
 router.get("/login", (req, res) => {
