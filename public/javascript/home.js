@@ -127,15 +127,23 @@ containerEl.addEventListener("click", function (event) {
     const cryptoName = clickedItem.children[1].textContent;
     const cryptoTicker = clickedItem.children[2].textContent;
 
-
-    console.log(cryptoTicker.split(" ")[1]);
-
-    addCrypto(cryptoName, cryptoTicker.split(" ")[1]);
-
-    console.log(clickedItem);
-    console.log("cryptoName: " + cryptoName);
-    console.log("cryptoTicker: " + cryptoTicker);
-    
-
+    addCrypto(cryptoName, cryptoTicker);
   }
 });
+
+async function addCrypto(crypto_name, ticker) {
+  const response = await fetch("/api/cryptos", {
+    method: "post",
+    body: JSON.stringify({
+      crypto_name,
+      ticker,
+    }),
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (response.ok) {
+  res.
+   else 
+    alert(response.statusText);
+  };
+
