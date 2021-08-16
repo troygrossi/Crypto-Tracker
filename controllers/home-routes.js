@@ -1,6 +1,4 @@
 const router = require("express").Router();
-const test = { test: "test" };
-
 router.get("/", (req, res) => {
   const loggedIn = req.session.loggedIn;
   const userId = req.session.user_id;

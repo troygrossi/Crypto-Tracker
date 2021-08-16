@@ -121,29 +121,30 @@ const containerEl = document.querySelector(".crypto-container-all");
 containerEl.addEventListener("click", function (event) {
   const clickedItem = event.target.parentElement;
 
+  console.log("Clicked outside");
   if (clickedItem.className === "row crypto-container") {
+    console.log("clicked: " + clickedItem.children);
     const cryptoName = clickedItem.children[1].textContent;
     const cryptoTicker = clickedItem.children[2].textContent;
 
-    console.log(cryptoTicker.split(" ")[1]);
-
+    //cryptoTicker is split here because to format the word properly for the database
     addCrypto(cryptoName, cryptoTicker.split(" ")[1]);
-
-    console.log(clickedItem);
-    console.log("cryptoName: " + cryptoName);
-    console.log("cryptoTicker: " + cryptoTicker);
   }
 });
 
-const getLoggedStatus = async function () {
-  const response = await fetch("/api/users/loggedstatus", {
-    method: "get",
+async function addCrypto(crypto_name, ticker) {
+  const response = await fetch("/api/cryptos", {
+    method: "post",
+    body: JSON.stringify({
+      crypto_name,
+      ticker,
+    }),
+    headers: { "Content-Type": "application/json" },
   });
 
   if (response.ok) {
-    console.log(response);
+    //res.else;
   } else {
     alert(response.statusText);
   }
-};
-getLoggedStatus();
+}
