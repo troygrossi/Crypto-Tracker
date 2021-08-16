@@ -8,7 +8,7 @@ const fetchCryptoData = async function (ticker, fullName, index) {
     let cryptoData = await fetch(cryptoURL);
     cryptoData = await cryptoData.json();
     cryptoData = parseObject(cryptoData.RAW[ticker].USD, ticker, fullName);
-    console.log(cryptoData);
+    // console.log(cryptoData);
     generateRows(cryptoData, index);
     return 0;
   } catch (error) {
@@ -124,5 +124,6 @@ const getProfileData = async function (user_id) {
     alert(response.statusText);
   }
 };
-const user_id = 1; // temporay variable, eventually user_id will be pulled from cookies
-getProfileData(user_id);
+const userId = document.getElementById("userId").textContent;
+const user_id = 9; // temporay variable, eventually user_id will be pulled from cookies
+getProfileData(userId);

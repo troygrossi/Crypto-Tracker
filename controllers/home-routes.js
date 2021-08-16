@@ -1,7 +1,9 @@
 const router = require("express").Router();
 const test = { test: "test" };
 router.get("/", (req, res) => {
-  res.render("home", { test });
+  const loggedIn = req.session.loggedIn;
+  console.log(loggedIn);
+  res.render("home", { loggedIn });
 });
 
 router.get("/login", (req, res) => {
@@ -14,11 +16,12 @@ router.get("/login", (req, res) => {
 });
 
 router.get("/profile", (req, res) => {
-  res.render("profile");
+  const userId = req.session.user_id;
+  res.render(`profile`, { userId });
 });
 
-router.get("/signup", (req, res)=>{
-  res.json({msg: "welcome to the signup"})
+router.get("/signup", (req, res) => {
+  res.json({ msg: "welcome to the signup" });
 });
 
 module.exports = router;

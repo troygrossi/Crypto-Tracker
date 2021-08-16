@@ -4,7 +4,6 @@
   /* box-sizing: border-box; */
 }
 .crypto-image {
-  
   width: 4rem;
   height: 4rem;
   border-radius: 25%;
@@ -12,7 +11,6 @@
 .bg-dark {
   --bs-bg-opacity: 0;
 }
-
 
 body {
   background-image: url("../css/background.jpg");
@@ -41,8 +39,6 @@ body {
   /* text-shadow: 2px 2px #5a5858 ; */
   font-family: spectral;
   color: white;
-  
-  
 }
 .crypto-container {
   background-color: rgba(175, 171, 171, 0.363);
@@ -57,7 +53,4 @@ body {
 }
 .crypto-fullName {
   margin: 0 auto 0 auto;
-  
 }
-
-

@@ -127,9 +127,15 @@ containerEl.addEventListener("click", function (event) {
     const cryptoName = clickedItem.children[1].textContent;
     const cryptoTicker = clickedItem.children[2].textContent;
 
+
+    console.log(cryptoTicker.split(" ")[1]);
+
+    addCrypto(cryptoName, cryptoTicker.split(" ")[1]);
+
     console.log(clickedItem);
     console.log("cryptoName: " + cryptoName);
     console.log("cryptoTicker: " + cryptoTicker);
     
+
   }
 });
