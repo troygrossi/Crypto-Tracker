@@ -125,5 +125,4 @@ const getProfileData = async function (user_id) {
   }
 };
 const userId = document.getElementById("userId").textContent;
-const user_id = 9; // temporay variable, eventually user_id will be pulled from cookies
 getProfileData(userId);

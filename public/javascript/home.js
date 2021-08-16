@@ -1,7 +1,5 @@
 const { contains } = "sequelize/types/lib/operators";
 
-// const { profile } = require("console");
-
 const cryptoURL =
   "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=100&tsym=USD&api_key=a4aab0aac84ce952d019d02f61fba54756f47ca0417926e2297e8156df016996";
 
@@ -127,7 +125,6 @@ containerEl.addEventListener("click", function (event) {
     const cryptoName = clickedItem.children[1].textContent;
     const cryptoTicker = clickedItem.children[2].textContent;
 
-
     console.log(cryptoTicker.split(" ")[1]);
 
     addCrypto(cryptoName, cryptoTicker.split(" ")[1]);
@@ -135,7 +132,18 @@ containerEl.addEventListener("click", function (event) {
     console.log(clickedItem);
     console.log("cryptoName: " + cryptoName);
     console.log("cryptoTicker: " + cryptoTicker);
-    
-
   }
 });
+
+const getLoggedStatus = async function () {
+  const response = await fetch("/api/users/loggedstatus", {
+    method: "get",
+  });
+
+  if (response.ok) {
+    console.log(response);
+  } else {
+    alert(response.statusText);
+  }
+};
+getLoggedStatus();

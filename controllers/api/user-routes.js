@@ -34,6 +34,11 @@ router.get("/:id", (req, res) => {
     });
 });
 
+router.post("/loggedstatus", (req, res) => {
+  const loggedIn = req.session.loggedIn;
+  res.send(loggedIn);
+});
+
 //create a user
 router.post("/", (req, res) => {
   User.create({
