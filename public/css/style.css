@@ -4,7 +4,6 @@
   /* box-sizing: border-box; */
 }
 .crypto-image {
-  
   width: 4rem;
   height: 4rem;
   border-radius: 25%;
@@ -12,7 +11,6 @@
 .bg-dark {
   --bs-bg-opacity: 0;
 }
-
 
 body {
   background-image: url("../css/background.jpg");
@@ -41,13 +39,7 @@ body {
   /* text-shadow: 2px 2px #5a5858 ; */
   font-family: spectral;
   color: white;
-  
-  
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 0b6fbe46877ea1c06c46bb00cbcb93371a9a9a9f
 .crypto-container {
   background-color: rgba(175, 171, 171, 0.363);
   margin-bottom: 10px;
@@ -60,23 +52,5 @@ body {
   border-radius: 25px;
 }
 .crypto-fullName {
-<<<<<<< HEAD
-  border-style: solid;
-  border-color: white;
-}
-
-=======
   margin: 0 auto 0 auto;
-<<<<<<< HEAD
-  border-style: solid;
-  border-color: white;
 }
->>>>>>> 0b6fbe46877ea1c06c46bb00cbcb93371a9a9a9f
-.jumbotron {
-  justify-content: top;
-=======
-  
->>>>>>> dc7b3cd5d8a4b33f9cc940a46329fde964ccce5c
-}
-
-
