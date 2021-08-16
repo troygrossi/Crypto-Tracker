@@ -61,7 +61,6 @@ const mapObject = function (data) {
 // Then, a container for every object variable(ex: fullname) will be created and appended to the respectivc crypto
 // Then, the crypto will be appended to .crypto-container
 const generateRows = function (cryptoData) {
-  console.log(cryptoData);
   const containerAllEl = document.querySelector(".crypto-container-all");
   cryptoData.forEach((cryptoData, index) => {
     const containerSingleEl = document.createElement("div");
@@ -111,33 +110,39 @@ const generateRows = function (cryptoData) {
     //create button element and append to div
 
     containerAllEl.append(containerSingleEl);
+
+    highlightSaved(cryptoData.ticker, containerSingleEl);
   });
-  console.log("test");
 };
 
 fetchCrypto(cryptoURL);
 
 const containerEl = document.querySelector(".crypto-container-all");
 containerEl.addEventListener("click", function (event) {
-  const clickedItem = event.target.parentElement;
-
-  console.log("Clicked outside");
-  if (clickedItem.className === "row crypto-container") {
-    console.log("clicked: " + clickedItem.children);
-    const cryptoName = clickedItem.children[1].textContent;
-    const cryptoTicker = clickedItem.children[2].textContent;
-
-    //cryptoTicker is split here because to format the word properly for the database
-    addCrypto(cryptoName, cryptoTicker.split(" ")[1]);
+  const loggedIn = document.getElementById("loggedIn").textContent;
+  if (loggedIn) {
+    const userId = document.getElementById("userId").textContent;
+    const clickedItem = event.target.parentElement;
+    // reload to show the item clicked is saved, only reloads if user is logged in and container is not already highlighted
+    if (clickedItem.className === "row crypto-container") {
+      const cryptoName = clickedItem.children[1].textContent;
+      const cryptoTicker = clickedItem.children[2].textContent;
+      duplicateValidation(
+        cryptoName.split(" ")[1],
+        cryptoTicker.split(" ")[1],
+        userId
+      );
+    }
   }
 });
 
-async function addCrypto(crypto_name, ticker) {
+async function addCrypto(crypto_name, ticker, user_id) {
   const response = await fetch("/api/cryptos", {
     method: "post",
     body: JSON.stringify({
       crypto_name,
       ticker,
+      user_id,
     }),
     headers: { "Content-Type": "application/json" },
   });
@@ -148,3 +153,44 @@ async function addCrypto(crypto_name, ticker) {
     alert(response.statusText);
   }
 }
+
+const duplicateValidation = async function (cryptoName, ticker, userId) {
+  let userCryptos = await fetch("/api/cryptos/" + userId);
+  userCryptos = await userCryptos.json();
+  let duplicate = false;
+  userCryptos.forEach((crypto) => {
+    if (crypto.ticker === ticker) {
+      duplicate = true;
+    }
+  });
+  if (!duplicate) {
+    console.log("saved: ", cryptoName, ticker);
+    //cryptoTicker is split here because to format the word properly for the database
+    addCrypto(cryptoName, ticker, userId);
+  } else {
+    console.log("cannot save duplicate");
+  }
+  location.reload();
+  return;
+};
+
+const highlightSaved = async function (ticker, containerSingleEl) {
+  const loggedIn = document.getElementById("loggedIn").textContent;
+  const userId = document.getElementById("userId").textContent;
+  const highlightColor = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--highlight-color");
+  if (loggedIn) {
+    let userCryptos = await fetch("/api/cryptos/" + userId);
+    userCryptos = await userCryptos.json();
+    let isSaved = false;
+    userCryptos.forEach((crypto) => {
+      if (crypto.ticker === ticker) {
+        isSaved = true;
+      }
+    });
+    if (isSaved) {
+      containerSingleEl.style.background = highlightColor;
+    }
+  }
+};

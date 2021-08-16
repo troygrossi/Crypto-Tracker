@@ -25,7 +25,7 @@ router.get("/:id", (req, res) => {
     where: {
       user_id: req.params.id,
     },
-    attributes: ["id", "crypto_name", "ticker"],
+    attributes: ["id", "crypto_name", "ticker", "user_id"],
     include: [
       {
         model: User,
