@@ -1,9 +1,10 @@
 const { contains } = "sequelize/types/lib/operators";
 
-const cryptoURL =
-  "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=100&tsym=USD&api_key=a4aab0aac84ce952d019d02f61fba54756f47ca0417926e2297e8156df016996";
-
-const fetchCrypto = async function (cryptoURL) {
+const fetchCrypto = async function (page) {
+  const cryptoURL =
+    "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=100&page=" +
+    page +
+    "&tsym=USD&api_key=a4aab0aac84ce952d019d02f61fba54756f47ca0417926e2297e8156df016996";
   try {
     let cryptoData = await fetch(cryptoURL);
     cryptoData = await cryptoData.json();
@@ -115,8 +116,6 @@ const generateRows = function (cryptoData) {
   });
 };
 
-fetchCrypto(cryptoURL);
-
 const containerEl = document.querySelector(".crypto-container-all");
 containerEl.addEventListener("click", function (event) {
   const loggedIn = document.getElementById("loggedIn").textContent;
@@ -194,3 +193,45 @@ const highlightSaved = async function (ticker, containerSingleEl) {
     }
   }
 };
+
+const getPage = function () {
+  if (!localStorage.getItem("page-number")) {
+    document.getElementById("left-button").style.display = "none";
+    localStorage.setItem("page-number", 0);
+    return 0;
+  } else {
+    if (localStorage.getItem("page-number") === "0") {
+      document.getElementById("left-button").style.display = "none";
+    }
+    return localStorage.getItem("page-number");
+  }
+};
+
+const leftButtonEl = document.querySelector("#left-button");
+const rightButtonEl = document.querySelector("#right-button");
+rightButtonEl.addEventListener("click", function (event) {
+  event.preventDefault();
+  console.log("click");
+  let currentPage = localStorage.getItem("page-number");
+  let nextPage = parseInt(currentPage) + 1;
+  console.log(nextPage);
+  localStorage.setItem("page-number", nextPage);
+  location.reload();
+});
+leftButtonEl.addEventListener("click", function (event) {
+  event.preventDefault();
+  console.log("click");
+  let currentPage = localStorage.getItem("page-number");
+  let nextPage = parseInt(currentPage) - 1;
+  console.log(nextPage);
+  localStorage.setItem("page-number", nextPage);
+  location.reload();
+});
+const logoEl = document.querySelector(".navbar-brand");
+logoEl.addEventListener("click", function (event) {
+  event.preventDefault();
+  localStorage.setItem("page-number", 0);
+  location.reload();
+});
+const pageNumber = getPage();
+fetchCrypto(pageNumber);
