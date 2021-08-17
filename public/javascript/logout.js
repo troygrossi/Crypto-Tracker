@@ -1,5 +1,4 @@
 async function logout() {
-  console.log("test");
   const response = await fetch("/api/users/logout", {
     method: "post",
     headers: { "Content-Type": "application/json" },
@@ -16,5 +15,4 @@ document.addEventListener("click", (event) => {
   if (event.target.id === "logout") {
     logout();
   }
-  console.log(event.target);
 });
