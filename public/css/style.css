@@ -69,8 +69,20 @@ body {
   color: rgba(255, 255, 255, 0.678);
 }
 #left-button {
-  left: 5%;
+  left: 5%;;
 }
 #right-button {
   right: 5%;
 }
+
+.divclassmainprofile {
+
+  opacity: 0;
+  text-align: center;
+
+}
+
+.p-5 {
+  opacity: 1;
+}
+
