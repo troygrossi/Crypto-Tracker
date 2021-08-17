@@ -136,21 +136,23 @@ const getUserCryptos = function (userCryptos) {
 };
 
 const getProfileData = async function (user_id) {
-  const response = await fetch("/api/cryptos/" + user_id, {
-    method: "get",
-    body: JSON.stringify(),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  if (response.ok) {
-    response.json().then((userCryptos) => {
-      //
-      getUserCryptos(userCryptos);
-      //
+  if (user_id) {
+    const response = await fetch("/api/cryptos/" + user_id, {
+      method: "get",
+      body: JSON.stringify(),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-  } else {
-    alert(response.statusText);
+    if (response.ok) {
+      response.json().then((userCryptos) => {
+        //
+        getUserCryptos(userCryptos);
+        //
+      });
+    } else {
+      alert(response.statusText);
+    }
   }
 };
 const userId = document.getElementById("userId").textContent;
