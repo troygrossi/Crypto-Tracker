@@ -67,7 +67,8 @@ const generateRows = function (cryptoData) {
     const containerSingleEl = document.createElement("div");
 
     containerSingleEl.setAttribute("class", "row crypto-container");
-    containerSingleEl.setAttribute("data-index", index);
+    containerSingleEl.setAttribute("data-ticker", cryptoData.ticker);
+    containerSingleEl.setAttribute("data-fullName", cryptoData.fullName);
 
     const imageContainerEl = document.createElement("div");
     imageContainerEl.setAttribute("class", "col crypto-image-container");
@@ -81,35 +82,60 @@ const generateRows = function (cryptoData) {
     containerSingleEl.append(imageContainerEl);
     const fullNameEl = document.createElement("div");
     fullNameEl.setAttribute("class", "col crypto-fullName");
-    fullNameEl.textContent = `Name: ${cryptoData.fullName}`;
-    containerSingleEl.append(fullNameEl);
+    fullNameEl.textContent = cryptoData.fullName;
+    const fullNameHeaderEl = document.createElement("div");
+    fullNameHeaderEl.setAttribute("class", "col fullName-header");
+    fullNameHeaderEl.textContent = "Name:";
+    fullNameHeaderEl.append(fullNameEl);
+    containerSingleEl.append(fullNameHeaderEl);
     const tickerEl = document.createElement("div");
-    tickerEl.setAttribute("class", "col rypto-ticker");
-    tickerEl.textContent = `Ticker: ${cryptoData.ticker}`;
-    containerSingleEl.append(tickerEl);
+    tickerEl.setAttribute("class", "col crypto-ticker");
+    tickerEl.textContent = cryptoData.ticker;
+    const tickerHeaderEl = document.createElement("div");
+    tickerHeaderEl.setAttribute("class", "col ticker-header");
+    tickerHeaderEl.textContent = "Ticker:";
+    tickerHeaderEl.append(tickerEl);
+    containerSingleEl.append(tickerHeaderEl);
     const priceEl = document.createElement("div");
     priceEl.setAttribute("class", "col crypto-price");
-    priceEl.textContent = `Price: ${cryptoData.price}`;
-    containerSingleEl.append(priceEl);
+    priceEl.textContent = cryptoData.price.toFixed(4);
+    const priceHeaderEl = document.createElement("div");
+    priceHeaderEl.setAttribute("class", "col price-header");
+    priceHeaderEl.textContent = "Price:";
+    priceHeaderEl.append(priceEl);
+    containerSingleEl.append(priceHeaderEl);
     const lowEl = document.createElement("div");
     lowEl.setAttribute("class", "col crypto-low");
-    lowEl.textContent = `Low: ${cryptoData.low}`;
-    containerSingleEl.append(lowEl);
+    lowEl.textContent = cryptoData.low.toFixed(2);
+    const lowHeaderEl = document.createElement("div");
+    lowHeaderEl.setAttribute("class", "col low-header");
+    lowHeaderEl.textContent = "Low:";
+    lowHeaderEl.append(lowEl);
+    containerSingleEl.append(lowHeaderEl);
     const highEl = document.createElement("div");
     highEl.setAttribute("class", "col crypto-high");
-    highEl.textContent = `High: ${cryptoData.high}`;
-    containerSingleEl.append(highEl);
+    highEl.textContent = cryptoData.high.toFixed(2);
+    const highHeaderEl = document.createElement("div");
+    highHeaderEl.setAttribute("class", "col high-header");
+    highHeaderEl.textContent = "High:";
+    highHeaderEl.append(highEl);
+    containerSingleEl.append(highHeaderEl);
     const changeEl = document.createElement("div");
     changeEl.setAttribute("class", "col crypto-change");
-    changeEl.textContent = `Change: ${cryptoData.change}`;
-    containerSingleEl.append(changeEl);
+    changeEl.textContent = cryptoData.change.toFixed(4);
+    const changeHeaderEl = document.createElement("div");
+    changeHeaderEl.setAttribute("class", "col change-header");
+    changeHeaderEl.textContent = "Change:";
+    changeHeaderEl.append(changeEl);
+    containerSingleEl.append(changeHeaderEl);
     const mktCapEl = document.createElement("div");
     mktCapEl.setAttribute("class", "col crypto-mktCap");
-    mktCapEl.textContent = `Market Cap: ${cryptoData.mktCap}`;
-    containerSingleEl.append(mktCapEl);
-
-    //create button element and append to div
-
+    mktCapEl.textContent = cryptoData.mktCap.toFixed(2);
+    const mktCapHeaderEl = document.createElement("div");
+    mktCapHeaderEl.setAttribute("class", "col mktCap-header");
+    mktCapHeaderEl.textContent = "MktCap:";
+    mktCapHeaderEl.append(mktCapEl);
+    containerSingleEl.append(mktCapHeaderEl);
     containerAllEl.append(containerSingleEl);
 
     highlightSaved(cryptoData.ticker, containerSingleEl);
@@ -121,16 +147,17 @@ containerEl.addEventListener("click", function (event) {
   const loggedIn = document.getElementById("loggedIn").textContent;
   if (loggedIn) {
     const userId = document.getElementById("userId").textContent;
-    const clickedItem = event.target.parentElement;
+    let clickedItem = event.target.parentElement;
     // reload to show the item clicked is saved, only reloads if user is logged in and container is not already highlighted
     if (clickedItem.className === "row crypto-container") {
-      const cryptoName = clickedItem.children[1].textContent;
-      const cryptoTicker = clickedItem.children[2].textContent;
-      duplicateValidation(
-        cryptoName.split(" ")[1],
-        cryptoTicker.split(" ")[1],
-        userId
-      );
+      const ticker = clickedItem.dataset.ticker;
+      const fullName = clickedItem.dataset.fullname;
+      duplicateValidation(fullName, ticker, userId);
+    } else if (clickedItem.parentElement.className === "row crypto-container") {
+      clickedItem = clickedItem.parentElement;
+      const ticker = clickedItem.dataset.ticker;
+      const fullName = clickedItem.dataset.fullname;
+      duplicateValidation(fullName, ticker, userId);
     }
   }
 });
