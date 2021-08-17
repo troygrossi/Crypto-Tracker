@@ -60,16 +60,18 @@ body {
 
 .page-button {
   position: fixed;
-  top: 75%;
+  flex-flow: sticky;
+  top: 4
+  0%;
   border: 20px solid #5c5c5c98;
   background-color: rgba(134, 134, 134, 0.603);
-  border-radius: 100px;
+  border-radius: 70px;
   font-size: 100px;
   width: 10%;
   color: rgba(255, 255, 255, 0.678);
 }
 #left-button {
-  left: 5%;;
+  left: 5%;
 }
 #right-button {
   right: 5%;
