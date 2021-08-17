@@ -21,7 +21,7 @@ router.get("/profile", (req, res) => {
 });
 
 router.get("/signup", (req, res) => {
-  res.json({ msg: "welcome to the signup" });
+  res.render("signup");
 });
 
 module.exports = router;
