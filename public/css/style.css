@@ -61,8 +61,7 @@ body {
 .page-button {
   position: fixed;
   flex-flow: sticky;
-  top: 4
-  0%;
+  top: 4 0%;
   border: 20px solid #5c5c5c98;
   background-color: rgba(134, 134, 134, 0.603);
   border-radius: 70px;
@@ -78,13 +77,14 @@ body {
 }
 
 .divclassmainprofile {
-
   opacity: 0;
   text-align: center;
-
 }
 
 .p-5 {
   opacity: 1;
 }
 
+.delete-button {
+  margin-top: 15px;
+}

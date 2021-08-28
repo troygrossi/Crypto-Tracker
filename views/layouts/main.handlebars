@@ -25,9 +25,15 @@
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/login">Login</a>
+          {{!-- <li class="nav-item"> --}}
+            {{#if loggedIn}}
+          <a class="nav-link" id="logout" href="/">Log Out</a>
           <li class="nav-item">
-        <a class="nav-link" id="logout" href="/">Log Out</a>
+          <a class="nav-link" href="/profile">Profile</a>
+          </li>
+          {{else}}
+           <a class="nav-link" href="/login">Login</a>
+          {{/if}}
       </li>
           
           
@@ -38,9 +44,7 @@
             <a class="nav-link" href="/login">Login</a>
             {{/if}} --}}
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/profile">Profile</a>
-        </li>
+
       </ul>
     </div>
   </div>

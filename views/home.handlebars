@@ -54,8 +54,12 @@
   {{!-- <container class ="just-black"> --}}
   <div class="p-5 container text-center bg-dark text-white id=divclassmain">
     <h1 class="mb-3">Crypto Tracker By STAT</h1>
+    {{#if loggedIn}}
+    <h5 class="mb-3">Click a row to add it to your profile</h5>
+    {{else}}
     <h4 class="mb-3"> Be Your own Tracker</h4>
     <a class="btn btn-primary" href="/signup" role="button">Sign Up For Free</a>
+    {{/if}}
     </div>
 {{!-- </container> --}}
 <button class="page-button" id="left-button"> &#8592</button>
