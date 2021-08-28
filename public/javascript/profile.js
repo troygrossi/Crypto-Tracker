@@ -1,4 +1,4 @@
-const fetchCryptoData = async function (ticker, fullName, index) {
+const fetchCryptoData = async function (ticker, fullName, index, id) {
   ticker = ticker.toUpperCase();
   const cryptoURL =
     "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" +
@@ -9,7 +9,7 @@ const fetchCryptoData = async function (ticker, fullName, index) {
     cryptoData = await cryptoData.json();
     cryptoData = parseObject(cryptoData.RAW[ticker].USD, ticker, fullName);
     // console.log(cryptoData);
-    generateRows(cryptoData, index);
+    generateRows(cryptoData, index, id);
     return 0;
   } catch (error) {
     console.log(error);
@@ -50,7 +50,7 @@ const parseObject = function (data, ticker, fullName) {
   return cryptoData;
 };
 
-const generateRows = function (cryptoData, index) {
+const generateRows = function (cryptoData, index, id) {
   const containerAllEl = document.querySelector(".crypto-container-all");
   const containerSingleEl = document.createElement("div");
 
@@ -125,12 +125,21 @@ const generateRows = function (cryptoData, index) {
   mktCapHeaderEl.append(mktCapEl);
   containerSingleEl.append(mktCapHeaderEl);
   containerAllEl.append(containerSingleEl);
+  const buttonDiv = document.createElement("div");
+  buttonDiv.setAttribute("class", "col");
+  const buttonEl = document.createElement("button");
+  buttonEl.setAttribute("type", "button");
+  buttonEl.setAttribute("class", "delete-button");
+  buttonEl.setAttribute("id", id);
+  buttonEl.textContent = "Delete";
+  buttonDiv.append(buttonEl);
+  containerSingleEl.append(buttonDiv);
 };
 
 const getUserCryptos = function (userCryptos) {
   userCryptos.forEach((crypto, index) => {
     //
-    fetchCryptoData(crypto.ticker, crypto.crypto_name, index);
+    fetchCryptoData(crypto.ticker, crypto.crypto_name, index, crypto.id);
     //
   });
 };
@@ -157,3 +166,21 @@ const getProfileData = async function (user_id) {
 };
 const userId = document.getElementById("userId").textContent;
 getProfileData(userId);
+
+window.addEventListener("click", async function (event) {
+  const clickedItem = event.target;
+  if (event.target.type === "button") {
+    const response = await fetch(`/api/cryptos/${clickedItem.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      document.location.replace("/profile");
+    } else {
+      alert(response.statusText);
+    }
+  }
+});

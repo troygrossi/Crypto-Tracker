@@ -1,9 +1,8 @@
 const router = require("express").Router();
 router.get("/", (req, res) => {
-  const loggedIn = req.session.loggedIn;
+  //const loggedIn = req.session.loggedIn;
   const userId = req.session.user_id;
-  console.log(loggedIn);
-  res.render("home", { loggedIn, userId });
+  res.render("home", { loggedIn: req.session.loggedIn, userId });
 });
 
 router.get("/login", (req, res) => {
@@ -17,7 +16,7 @@ router.get("/login", (req, res) => {
 
 router.get("/profile", (req, res) => {
   const userId = req.session.user_id;
-  res.render(`profile`, { userId });
+  res.render(`profile`, { loggedIn: req.session.loggedIn, userId });
 });
 
 router.get("/signup", (req, res) => {
