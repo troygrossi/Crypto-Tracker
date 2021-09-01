@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="/css/style.css">
     <title>Crypto Tracker</title>
 </head>
+{{!-- containes logged in status for all pages --}}
+<p id="loggedIn" hidden>{{loggedIn}}</p>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"></a>
@@ -26,14 +29,11 @@
         </li>
         <li class="nav-item">
           {{!-- <li class="nav-item"> --}}
-            {{#if loggedIn}}
-          <a class="nav-link" id="logout" href="/">Log Out</a>
+          <a class="nav-link" id="nav-logout" style="display: none" href="/">Logout</a>
           <li class="nav-item">
-          <a class="nav-link" href="/profile">Profile</a>
+          <a class="nav-link" id= "nav-profile" style="display: none" href="/profile">Profile</a>
           </li>
-          {{else}}
-           <a class="nav-link" href="/login">Login</a>
-          {{/if}}
+           <a class="nav-link" id="nav-login" style="display: none" href="/login">Login</a>
       </li>
           
           
@@ -56,6 +56,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 <script type="module" src="/javascript/logout.js"></script>
+<script src="/javascript/nav.js"></script>
 
 </body>
 </html>

@@ -16,7 +16,8 @@ router.get("/login", (req, res) => {
 
 router.get("/profile", (req, res) => {
   const userId = req.session.user_id;
-  res.render(`profile`, { loggedIn: req.session.loggedIn, userId });
+  const loggedIn = req.session.loggedIn;
+  res.render("profile", { loggedIn, userId });
 });
 
 router.get("/signup", (req, res) => {
