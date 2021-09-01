@@ -85,6 +85,21 @@ body {
   opacity: 1;
 }
 
-.delete-button {
-  margin-top: 15px;
+.button-save {
+  height: 30px;
+  margin-top: auto;
+  margin-bottom: auto;
+  padding: 0;
+  background-color: rgba(10, 124, 10, 0.788);
+  border-radius: 30px;
+  margin-left: 20px;
+}
+.button-delete {
+  height: 30px;
+  margin-top: auto;
+  margin-bottom: auto;
+  padding: 0;
+  background-color: rgba(168, 10, 10, 0.747);
+  border-radius: 30px;
+  margin-left: 20px;
 }

@@ -55,6 +55,26 @@ const mapObject = function (data) {
   return cryptoData;
 };
 
+const highlightSaved = async function (ticker, containerSingleEl) {
+  const loggedIn = document.getElementById("loggedIn").textContent;
+  const userId = document.getElementById("userId").textContent;
+  const highlightColor = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--highlight-color");
+  if (loggedIn) {
+    let userCryptos = await fetch("/api/cryptos/" + userId);
+    userCryptos = await userCryptos.json();
+    let isSaved = false;
+    userCryptos.forEach((crypto) => {
+      if (crypto.ticker === ticker) {
+        isSaved = true;
+      }
+    });
+    if (isSaved) {
+      containerSingleEl.style.background = highlightColor;
+    }
+  }
+};
 // Generate containers that contain the list of crypto
 // Idea is: have a container that already exists with no data called .crypto-container, this will hold all the cryptos
 // Then, this function creates a new container for every crytpo pulled from the API
@@ -67,9 +87,12 @@ const generateRows = function (cryptoData) {
     const containerSingleEl = document.createElement("div");
 
     containerSingleEl.setAttribute("class", "row crypto-container");
-    containerSingleEl.setAttribute("data-ticker", cryptoData.ticker);
-    containerSingleEl.setAttribute("data-fullName", cryptoData.fullName);
-
+    const saveButtonEl = document.createElement("button");
+    saveButtonEl.setAttribute("class", "col button-save");
+    saveButtonEl.textContent = "save";
+    saveButtonEl.setAttribute("data-ticker", cryptoData.ticker);
+    saveButtonEl.setAttribute("data-fullName", cryptoData.fullName);
+    containerSingleEl.append(saveButtonEl);
     const imageContainerEl = document.createElement("div");
     imageContainerEl.setAttribute("class", "col crypto-image-container");
     const imageEl = document.createElement("img");
@@ -98,7 +121,10 @@ const generateRows = function (cryptoData) {
     containerSingleEl.append(tickerHeaderEl);
     const priceEl = document.createElement("div");
     priceEl.setAttribute("class", "col crypto-price");
-    priceEl.textContent = cryptoData.price.toFixed(4);
+    priceEl.textContent = cryptoData.price;
+    if (priceEl.textContent !== "No Info") {
+      priceEl.textContent = cryptoData.price.toFixed(4);
+    }
     const priceHeaderEl = document.createElement("div");
     priceHeaderEl.setAttribute("class", "col price-header");
     priceHeaderEl.textContent = "Price:";
@@ -106,7 +132,10 @@ const generateRows = function (cryptoData) {
     containerSingleEl.append(priceHeaderEl);
     const lowEl = document.createElement("div");
     lowEl.setAttribute("class", "col crypto-low");
-    lowEl.textContent = cryptoData.low.toFixed(2);
+    lowEl.textContent = cryptoData.low;
+    if (lowEl.textContent !== "No Info") {
+      lowEl.textContent = cryptoData.low.toFixed(2);
+    }
     const lowHeaderEl = document.createElement("div");
     lowHeaderEl.setAttribute("class", "col low-header");
     lowHeaderEl.textContent = "Low:";
@@ -114,7 +143,10 @@ const generateRows = function (cryptoData) {
     containerSingleEl.append(lowHeaderEl);
     const highEl = document.createElement("div");
     highEl.setAttribute("class", "col crypto-high");
-    highEl.textContent = cryptoData.high.toFixed(2);
+    highEl.textContent = cryptoData.high;
+    if (highEl.textContent !== "No Info") {
+      highEl.textContent = cryptoData.high.toFixed(2);
+    }
     const highHeaderEl = document.createElement("div");
     highHeaderEl.setAttribute("class", "col high-header");
     highHeaderEl.textContent = "High:";
@@ -122,7 +154,10 @@ const generateRows = function (cryptoData) {
     containerSingleEl.append(highHeaderEl);
     const changeEl = document.createElement("div");
     changeEl.setAttribute("class", "col crypto-change");
-    changeEl.textContent = cryptoData.change.toFixed(4);
+    changeEl.textContent = cryptoData.change;
+    if (changeEl.textContent !== "No Info") {
+      changeEl.textContent = cryptoData.change.toFixed(4);
+    }
     const changeHeaderEl = document.createElement("div");
     changeHeaderEl.setAttribute("class", "col change-header");
     changeHeaderEl.textContent = "Change:";
@@ -130,7 +165,10 @@ const generateRows = function (cryptoData) {
     containerSingleEl.append(changeHeaderEl);
     const mktCapEl = document.createElement("div");
     mktCapEl.setAttribute("class", "col crypto-mktCap");
-    mktCapEl.textContent = cryptoData.mktCap.toFixed(2);
+    mktCapEl.textContent = cryptoData.mktCap;
+    if (mktCapEl.textContent !== "No Info") {
+      mktCapEl.textContent = cryptoData.mktCap.toFixed(2);
+    }
     const mktCapHeaderEl = document.createElement("div");
     mktCapHeaderEl.setAttribute("class", "col mktCap-header");
     mktCapHeaderEl.textContent = "MktCap:";
@@ -142,22 +180,45 @@ const generateRows = function (cryptoData) {
   });
 };
 
+const duplicateValidation = async function (
+  cryptoName,
+  ticker,
+  userId,
+  cryptoRow
+) {
+  let userCryptos = await fetch("/api/cryptos/" + userId);
+  userCryptos = await userCryptos.json();
+  let duplicate = false;
+  userCryptos.forEach((crypto) => {
+    if (crypto.ticker === ticker) {
+      duplicate = true;
+    }
+  });
+  if (!duplicate) {
+    console.log("saved: ", cryptoName, ticker);
+    //cryptoTicker is split here because to format the word properly for the database
+    addCrypto(cryptoName, ticker, userId);
+    const highlightColor = getComputedStyle(
+      document.documentElement
+    ).getPropertyValue("--highlight-color");
+    cryptoRow.style.background = highlightColor;
+  } else {
+    console.log("cannot save duplicate");
+  }
+  return;
+};
+
 const containerEl = document.querySelector(".crypto-container-all");
 containerEl.addEventListener("click", function (event) {
   const loggedIn = document.getElementById("loggedIn").textContent;
   if (loggedIn) {
     const userId = document.getElementById("userId").textContent;
-    let clickedItem = event.target.parentElement;
+    let clickedItem = event.target;
     // reload to show the item clicked is saved, only reloads if user is logged in and container is not already highlighted
-    if (clickedItem.className === "row crypto-container") {
+    if (clickedItem.className === "col button-save") {
       const ticker = clickedItem.dataset.ticker;
       const fullName = clickedItem.dataset.fullname;
-      duplicateValidation(fullName, ticker, userId);
-    } else if (clickedItem.parentElement.className === "row crypto-container") {
-      clickedItem = clickedItem.parentElement;
-      const ticker = clickedItem.dataset.ticker;
-      const fullName = clickedItem.dataset.fullname;
-      duplicateValidation(fullName, ticker, userId);
+      duplicateValidation(fullName, ticker, userId, clickedItem.parentElement);
     }
   }
 });
@@ -172,68 +233,14 @@ async function addCrypto(crypto_name, ticker, user_id) {
     }),
     headers: { "Content-Type": "application/json" },
   });
-
   if (response.ok) {
-    //res.else;
   } else {
     alert(response.statusText);
   }
 }
 
-const duplicateValidation = async function (cryptoName, ticker, userId) {
-  let userCryptos = await fetch("/api/cryptos/" + userId);
-  userCryptos = await userCryptos.json();
-  let duplicate = false;
-  userCryptos.forEach((crypto) => {
-    if (crypto.ticker === ticker) {
-      duplicate = true;
-    }
-  });
-  if (!duplicate) {
-    console.log("saved: ", cryptoName, ticker);
-    //cryptoTicker is split here because to format the word properly for the database
-    addCrypto(cryptoName, ticker, userId);
-  } else {
-    console.log("cannot save duplicate");
-  }
-  location.reload();
-  return;
-};
-
-const highlightSaved = async function (ticker, containerSingleEl) {
-  const loggedIn = document.getElementById("loggedIn").textContent;
-  const userId = document.getElementById("userId").textContent;
-  const highlightColor = getComputedStyle(
-    document.documentElement
-  ).getPropertyValue("--highlight-color");
-  if (loggedIn) {
-    let userCryptos = await fetch("/api/cryptos/" + userId);
-    userCryptos = await userCryptos.json();
-    let isSaved = false;
-    userCryptos.forEach((crypto) => {
-      if (crypto.ticker === ticker) {
-        isSaved = true;
-      }
-    });
-    if (isSaved) {
-      containerSingleEl.style.background = highlightColor;
-    }
-  }
-};
-
-const getPage = function () {
-  if (!localStorage.getItem("page-number")) {
-    document.getElementById("left-button").style.display = "none";
-    localStorage.setItem("page-number", 0);
-    return 0;
-  } else {
-    if (localStorage.getItem("page-number") === "0") {
-      document.getElementById("left-button").style.display = "none";
-    }
-    return localStorage.getItem("page-number");
-  }
-};
-
+// Controls the left and right pagnation buttons
+// Updates page number in local storage and then reloads the page to execute a new fetch
 const leftButtonEl = document.querySelector("#left-button");
 const rightButtonEl = document.querySelector("#right-button");
 rightButtonEl.addEventListener("click", function (event) {
@@ -260,5 +267,29 @@ logoEl.addEventListener("click", function (event) {
   localStorage.setItem("page-number", 0);
   location.reload();
 });
+
+// gets page number from local storage
+const getPage = function () {
+  if (!localStorage.getItem("page-number")) {
+    document.getElementById("left-button").style.display = "none";
+    localStorage.setItem("page-number", 0);
+    return 0;
+  } else {
+    if (localStorage.getItem("page-number") === "0") {
+      document.getElementById("left-button").style.display = "none";
+    }
+    return localStorage.getItem("page-number");
+  }
+};
+
+//  returns current page number from local storage
+// page number is sent as argument to query the list of cryptos to be displayed
 const pageNumber = getPage();
 fetchCrypto(pageNumber);
+
+// const buttonTest = function () {
+//   const button = document.querySelector("#test");
+//   button.addEventListener("click", (){
+
+//   })
+// };

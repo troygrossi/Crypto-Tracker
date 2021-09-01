@@ -12,7 +12,7 @@ async function logout() {
 }
 
 document.addEventListener("click", (event) => {
-  if (event.target.id === "logout") {
+  if (event.target.id === "nav-logout") {
     logout();
   }
 });

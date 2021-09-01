@@ -8,7 +8,6 @@ const fetchCryptoData = async function (ticker, fullName, index, id) {
     let cryptoData = await fetch(cryptoURL);
     cryptoData = await cryptoData.json();
     cryptoData = parseObject(cryptoData.RAW[ticker].USD, ticker, fullName);
-    // console.log(cryptoData);
     generateRows(cryptoData, index, id);
     return 0;
   } catch (error) {
@@ -55,9 +54,12 @@ const generateRows = function (cryptoData, index, id) {
   const containerSingleEl = document.createElement("div");
 
   containerSingleEl.setAttribute("class", "row crypto-container");
-  containerSingleEl.setAttribute("data-ticker", cryptoData.ticker);
-  containerSingleEl.setAttribute("data-fullName", cryptoData.fullName);
 
+  const saveButtonEl = document.createElement("button");
+  saveButtonEl.setAttribute("class", "col button-delete");
+  saveButtonEl.textContent = "delete";
+  saveButtonEl.setAttribute("data-crypto", id);
+  containerSingleEl.append(saveButtonEl);
   const imageContainerEl = document.createElement("div");
   imageContainerEl.setAttribute("class", "col crypto-image-container");
   const imageEl = document.createElement("img");
@@ -86,7 +88,10 @@ const generateRows = function (cryptoData, index, id) {
   containerSingleEl.append(tickerHeaderEl);
   const priceEl = document.createElement("div");
   priceEl.setAttribute("class", "col crypto-price");
-  priceEl.textContent = cryptoData.price.toFixed(4);
+  priceEl.textContent = cryptoData.price;
+  if (priceEl.textContent !== "No Info") {
+    priceEl.textContent = cryptoData.price.toFixed(4);
+  }
   const priceHeaderEl = document.createElement("div");
   priceHeaderEl.setAttribute("class", "col price-header");
   priceHeaderEl.textContent = "Price:";
@@ -94,7 +99,10 @@ const generateRows = function (cryptoData, index, id) {
   containerSingleEl.append(priceHeaderEl);
   const lowEl = document.createElement("div");
   lowEl.setAttribute("class", "col crypto-low");
-  lowEl.textContent = cryptoData.low.toFixed(2);
+  lowEl.textContent = cryptoData.low;
+  if (lowEl.textContent !== "No Info") {
+    lowEl.textContent = cryptoData.low.toFixed(2);
+  }
   const lowHeaderEl = document.createElement("div");
   lowHeaderEl.setAttribute("class", "col low-header");
   lowHeaderEl.textContent = "Low:";
@@ -102,7 +110,10 @@ const generateRows = function (cryptoData, index, id) {
   containerSingleEl.append(lowHeaderEl);
   const highEl = document.createElement("div");
   highEl.setAttribute("class", "col crypto-high");
-  highEl.textContent = cryptoData.high.toFixed(2);
+  highEl.textContent = cryptoData.high;
+  if (highEl.textContent !== "No Info") {
+    highEl.textContent = cryptoData.high.toFixed(2);
+  }
   const highHeaderEl = document.createElement("div");
   highHeaderEl.setAttribute("class", "col high-header");
   highHeaderEl.textContent = "High:";
@@ -110,7 +121,10 @@ const generateRows = function (cryptoData, index, id) {
   containerSingleEl.append(highHeaderEl);
   const changeEl = document.createElement("div");
   changeEl.setAttribute("class", "col crypto-change");
-  changeEl.textContent = cryptoData.change.toFixed(4);
+  changeEl.textContent = cryptoData.change;
+  if (changeEl.textContent !== "No Info") {
+    changeEl.textContent = cryptoData.change.toFixed(4);
+  }
   const changeHeaderEl = document.createElement("div");
   changeHeaderEl.setAttribute("class", "col change-header");
   changeHeaderEl.textContent = "Change:";
@@ -118,7 +132,10 @@ const generateRows = function (cryptoData, index, id) {
   containerSingleEl.append(changeHeaderEl);
   const mktCapEl = document.createElement("div");
   mktCapEl.setAttribute("class", "col crypto-mktCap");
-  mktCapEl.textContent = cryptoData.mktCap.toFixed(2);
+  mktCapEl.textContent = cryptoData.mktCap;
+  if (mktCapEl.textContent !== "No Info") {
+    mktCapEl.textContent = cryptoData.mktCap.toFixed(2);
+  }
   const mktCapHeaderEl = document.createElement("div");
   mktCapHeaderEl.setAttribute("class", "col mktCap-header");
   mktCapHeaderEl.textContent = "MktCap:";
@@ -127,13 +144,6 @@ const generateRows = function (cryptoData, index, id) {
   containerAllEl.append(containerSingleEl);
   const buttonDiv = document.createElement("div");
   buttonDiv.setAttribute("class", "col");
-  const buttonEl = document.createElement("button");
-  buttonEl.setAttribute("type", "button");
-  buttonEl.setAttribute("class", "delete-button");
-  buttonEl.setAttribute("id", id);
-  buttonEl.textContent = "Delete";
-  buttonDiv.append(buttonEl);
-  containerSingleEl.append(buttonDiv);
 };
 
 const getUserCryptos = function (userCryptos) {
@@ -169,8 +179,8 @@ getProfileData(userId);
 
 window.addEventListener("click", async function (event) {
   const clickedItem = event.target;
-  if (event.target.type === "button") {
-    const response = await fetch(`/api/cryptos/${clickedItem.id}`, {
+  if (event.target.className === "col button-delete") {
+    const response = await fetch("/api/cryptos/" + clickedItem.dataset.crypto, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -178,7 +188,7 @@ window.addEventListener("click", async function (event) {
     });
 
     if (response.ok) {
-      document.location.replace("/profile");
+      clickedItem.parentElement.style.display = "none";
     } else {
       alert(response.statusText);
     }

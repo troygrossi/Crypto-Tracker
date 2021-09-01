@@ -63,7 +63,7 @@ const generateRows = function (cryptoData) {
   const containerAllEl = document.querySelector(".crypto-container-all");
   cryptoData.forEach((cryptoData, index) => {
     const containerSingleEl = document.createElement("div");
- 
+
     containerSingleEl.setAttribute("class", "crypto-container");
     containerSingleEl.setAttribute("data-index", index);
 
@@ -105,7 +105,6 @@ const generateRows = function (cryptoData) {
     );
     imageContainerEl.append(imageEl);
     containerSingleEl.append(imageContainerEl);
-  
 
     containerAllEl.append(containerSingleEl);
   });
